@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bike Test Ride Booking</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --accent: #f59e0b;
+        }
+
+        * { box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
+        
+        body { 
+            margin: 0; 
+            background: #e2e8f0; 
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background: #0b132b;
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .logo span { color: #e63946; }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover { color: #e63946; }
+
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 100px 20px 20px;
+        }
+
+        .booking-form {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+
+        .booking-form h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        select, input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn:hover { background: #1d4ed8; }
+
+        footer {
+            background: #0b132b;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        footer p { margin: 0; opacity: 0.8; }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav>
+        <div class="logo"><a href="Bike.html">Velocity<span>Bikes</span></a></div>
+        <ul class="nav-links">
+            <li><a href="inventory.html">Inventory</a></li>
+            <li><a href="Test.html">Test Ride</a></li>
+            <li><a href="Bike.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="container">
+    <div class="booking-form">
+        <h2>Book Your Test Ride</h2>
+        <form id="bookingForm">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="bike">Select Bike</label>
+                <select id="bike" required>
+                    <option value="">Choose a bike...</option>
+                    <option value="Kawasaki Z1100">Kawasaki Z1100</option>
+                    <option value="Yamaha R1M">Yamaha R1M</option>
+                    <option value="BMW S1000RR">BMW S1000RR</option>
+                    <option value="Honda Dio 125">Honda Dio 125</option>
+                    <option value="TVS Apache RR 310">TVS Apache RR 310</option>
+                    <option value="Royal Enfield Meteor 350">Royal Enfield Meteor 350</option>
+                    <option value="KTM RC 390">KTM RC 390</option>
+                    <option value="Suzuki Hayabusa">Suzuki Hayabusa</option>
+                    <option value="Ducati Panigale V4">Ducati Panigale V4</option>
+                    <option value="Harley-Davidson Fat Boy">Harley-Davidson Fat Boy</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="date">Preferred Date</label>
+                <input type="date" id="date" required>
+            </div>
+            <div class="form-group">
+                <label for="time">Preferred Time</label>
+                <select id="time" required>
+                    <option value="">Select time...</option>
+                    <option value="9:00 AM">9:00 AM</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="2:00 PM">2:00 PM</option>
+                    <option value="3:00 PM">3:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                    <option value="5:00 PM">5:00 PM</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="message">Additional Notes</label>
+                <textarea id="message" rows="4" placeholder="Any special requests or questions..."></textarea>
+            </div>
+            <button type="submit" class="btn">Book Test Ride</button>
+        </form>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 Velocity Bikes Global. All Rights Reserved.</p>
+</footer>
+
+<script>
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const bike = document.getElementById('bike').value;
+        const date = document.getElementById('date').value;
+        const time = document.getElementById('time').value;
+        const message = document.getElementById('message').value;
+        
+        // Simple validation
+        if (!name || !email || !phone || !bike || !date || !time) {
+            alert('Please fill in all required fields.');
+            return;
+        }
+        
+        // Simulate booking submission
+        alert(`Thank you, ${name}! Your test ride for ${bike} on ${date} at ${time} has been booked. We'll contact you at ${email} or ${phone} to confirm.`);
+        
+        // Reset form
+        this.reset();
+    });
+</script>
+
+</body>
+</html>

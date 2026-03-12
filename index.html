@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Srinath Portfolio</title>
+  <link rel="stylesheet" href="port.css"/>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <h1>Srinath</h1>
+    <p>Beginner Web Developer | Learning HTML &amp; CSS</p>
+    <a href="#projects" class="btn">View My Work</a>
+  </header>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <div class="container">
+
+    <!-- ABOUT -->
+    <section id="about">
+      <h2>About Me</h2>
+      <p>Hello! My name is Srinath.</p>
+      <p>I am passionate about web development and currently learning HTML and CSS. I enjoy building clean and creative websites.</p>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <h2>My Skills</h2>
+      <div class="skill-box">
+        <div class="skill">HTML</div>
+        <div class="skill">CSS</div>
+        <div class="skill">Basic JavaScript</div>
+        <div class="skill">Basic Python</div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <h2>My Projects</h2>
+      <div class="project-container">
+
+        <a href="index.html" class="card">
+          <h3>Portfolio Website</h3>
+          <p>Personal website built using HTML &amp; CSS.</p>
+        </a>
+
+        <a href="Bike.html" class="card">
+          <h3>Bike Show Room Website</h3>
+          <p>Simple website design using HTML and CSS.</p>
+        </a>
+
+        <a href="DSK.html" class="card">
+          <h3>Java Calculator Application</h3>
+          <p>A simple calculator application built with Java.</p>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <h2>Contact Me</h2>
+      <form>
+        <input type="text" placeholder="Your name" required/>
+        <input type="email" placeholder="Your email" required/>
+        <input type="tel" placeholder="Your phone number" pattern="[0-9]{10}"/>
+        <textarea rows="4" placeholder="Your message" required></textarea>
+        <input type="submit" value="Send Message"/>
+      </form>
+    </section>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 My Portfolio | Designed by Srinath</p>
+  </footer>
+
+  <script>
+    // 1. FORM SUBMIT — show a success message
+    document.querySelector('form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Thanks for your message! I will get back to you soon.');
+      this.reset();
+    });
+
+
+    // 3. BACK TO TOP BUTTON — appears when you scroll down
+    var backBtn = document.createElement('button');
+    backBtn.textContent = '↑ Top';
+    backBtn.style.cssText =
+      'position:fixed; bottom:30px; right:30px; padding:10px 16px;' +
+      'background:#ff9800; color:white; border:none; border-radius:6px;' +
+      'font-weight:bold; cursor:pointer; display:none; font-size:14px;';
+    document.body.appendChild(backBtn);
+
+    window.addEventListener('scroll', function() {
+      backBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
+    });
+
+    backBtn.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // 4. SKILL CLICK — click a skill badge to highlight/unhighlight it
+    document.querySelectorAll('.skill').forEach(function(skill) {
+      skill.style.cursor = 'pointer';
+      skill.addEventListener('click', function() {
+        var isSelected = this.style.background === 'rgb(34, 34, 34)';
+        this.style.background = isSelected ? '#ff9800' : '#222';
+      });
+    });
+  </script>
+
+</body>
+</html>

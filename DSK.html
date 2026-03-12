@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Project Showcase</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --accent: #f59e0b;
+            --success: #10b981;
+        }
+
+        * { box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
+        
+        body { 
+            margin: 0; 
+            background: #e2e8f0; 
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background: #0b132b;
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .logo span { color: #e63946; }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover { color: #e63946; }
+
+        .container { 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            padding: 100px 20px 20px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary), #1d4ed8);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+
+        .hero h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.5rem;
+        }
+
+        .hero p {
+            margin: 0;
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-top: 0;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #334155;
+            margin-top: 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature-card {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .feature-card h3 {
+            margin-top: 0;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .feature-card p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: #64748b;
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .code-label {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-bottom: 10px;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .tech-badge {
+            background: var(--primary);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover { background: #1d4ed8; }
+
+        .btn-secondary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #d97706;
+        }
+
+        footer {
+            background: #0b132b;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .project-image {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-box {
+            background: #f0f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav>
+        <div class="logo">Srinath</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="inventory.html">Inventory</a></li>
+            <li><a href="Test.html">Test Ride</a></li>
+            <li><a href="DSK.html">Java Project</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="container">
+    <div class="hero">
+        <h1>Java Calculator Application</h1>
+        <p>A powerful and user-friendly calculator built with Java</p>
+    </div>
+
+    <!-- Project Overview -->
+    <div class="section">
+        <h2>Project Overview</h2>
+        <p>The Java Calculator Application is a comprehensive project demonstrating core Java concepts, object-oriented programming, and GUI development using Swing. This project showcases best practices in software design and clean code principles.</p>
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Lines of Code</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">10+</div>
+                <div class="stat-label">Features</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Classes</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features -->
+    <div class="section">
+        <h2>Key Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>✓ Basic Operations</h3>
+                <p>Addition, Subtraction, Multiplication, and Division with decimal support.</p>
+            </div>
+            <div class="feature-card">
+                <h3>✓ Advanced Functions</h3>
+                <p>Percentage, Square Root, Power, and trigonometric functions.</p>
+            </div>
+            <div class="feature-card">
+                <h3>✓ Memory Functions</h3>
+                <p>Store, recall, and clear values for quick calculations.</p>
+            </div>
+            <div class="feature-card">
+                <h3>✓ History Tracking</h3>
+                <p>View and replay previous calculations.</p>
+            </div>
+            <div class="feature-card">
+                <h3>✓ Error Handling</h3>
+                <p>Graceful error messages and division by zero prevention.</p>
+            </div>
+            <div class="feature-card">
+                <h3>✓ User Interface</h3>
+                <p>Intuitive GUI built with Java Swing framework.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Technology Stack -->
+    <div class="section">
+        <h2>Technology Stack</h2>
+        <p>This project utilizes the following technologies and concepts:</p>
+        <div class="tech-stack">
+            <span class="tech-badge">Java 8+</span>
+            <span class="tech-badge">Swing GUI</span>
+            <span class="tech-badge">Object-Oriented Programming</span>
+            <span class="tech-badge">Exception Handling</span>
+            <span class="tech-badge">Design Patterns</span>
+            <span class="tech-badge">MVC Architecture</span>
+        </div>
+    </div>
+
+    <!-- Code Snippet -->
+    <div class="section">
+        <h2>Code Sample</h2>
+        <p>Here's a sample of the main Calculator class structure:</p>
+        <div class="code-label">Calculator.java</div>
+        <div class="code-block">
+public class Calculator {
+    private double currentValue = 0.0;
+    private String operator = "";
+    private boolean newNumber = true;
+
+    public void pressNumber(double num) {
+        if (newNumber) {
+            currentValue = num;
+            newNumber = false;
+        } else {
+            currentValue = currentValue * 10 + num;
+        }
+    }
+
+    public double pressOperator(String op) {
+        if (!operator.isEmpty()) {
+            calculate();
+        }
+        operator = op;
+        newNumber = true;
+        return currentValue;
+    }
+
+    public double calculate() {
+        switch (operator) {
+            case "+": return currentValue + buffer;
+            case "-": return currentValue - buffer;
+            case "*": return currentValue * buffer;
+            case "/": return currentValue / buffer;
+            default: return currentValue;
+        }
+    }
+
+    public void clear() {
+        currentValue = 0.0;
+        operator = "";
+        newNumber = true;
+    }
+}
+        </div>
+    </div>
+
+    <!-- User Interface -->
+    <div class="section">
+        <h2>User Interface Design</h2>
+        <p>The calculator features a clean, organized layout with intuitive button placement mimicking real calculators:</p>
+        <ul>
+            <li><strong>Display Area:</strong> Large, easy-to-read text field showing current input and results</li>
+            <li><strong>Number Buttons:</strong> Grid layout (0-9) for quick number entry</li>
+            <li><strong>Operator Buttons:</strong> Clearly marked for mathematical operations</li>
+            <li><strong>Function Buttons:</strong> Advanced operations organized in a secondary row</li>
+            <li><strong>Result Button:</strong> Prominent equals button to execute calculations</li>
+        </ul>
+    </div>
+
+    <!-- How to Run -->
+    <div class="section">
+        <h2>How to Run</h2>
+        <div class="code-label">Command Line Instructions</div>
+        <div class="code-block">
+# Compile the Java files
+javac *.java
+
+# Run the main application
+java CalculatorApp
+        </div>
+        <p><strong>Requirements:</strong> Java Development Kit (JDK) 8 or higher</p>
+    </div>
+
+    <!-- Learning Outcomes -->
+    <div class="section">
+        <h2>Learning Outcomes</h2>
+        <p>Through this project, I've gained expertise in:</p>
+        <ul>
+            <li>Building graphical user interfaces with Java Swing</li>
+            <li>Event-driven programming and listener patterns</li>
+            <li>Exception handling and error prevention</li>
+            <li>Object-oriented design principles and best practices</li>
+            <li>Code organization and maintainability</li>
+            <li>Testing and debugging Java applications</li>
+        </ul>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="section" style="text-align: center; background: linear-gradient(135deg, var(--primary), #1d4ed8); color: white;">
+        <h2 style="color: white; border-bottom-color: rgba(255,255,255,0.3);">Want to Learn More?</h2>
+        <p>Check out the source code, documentation, and other projects in my portfolio.</p>
+        <button class="btn"><a href="index.html"> View Full Portfolio</a></button>
+        <button class="btn btn-secondary" style="margin-left: 10px;">Download Project</button>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 Velocity Bikes Global. All Rights Reserved.</p>
+</footer>
+
+<script>
+    // Add smooth scrolling for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+
+    // Log page load
+    console.log('Java Project Showcase Page Loaded Successfully');
+</script>
+
+</body>
+</html>

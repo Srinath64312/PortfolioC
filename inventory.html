@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velocity Bikes Inventory</title>
+
+    <style>
+        :root {
+            --primary: #e63946;
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #f8fafc;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            font-family: Segoe UI, Roboto, sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        /* HEADER */
+
+        header {
+            background: #020617;
+            padding: 18px 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* CONTAINER */
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 100px 20px 20px;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* FILTER CONTROLS */
+
+        .controls {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .controls input,
+        .controls select {
+            padding: 10px;
+            border-radius: 6px;
+            border: none;
+            flex: 1;
+            min-width: 150px;
+            background: #334155;
+            color: white;
+        }
+
+        /* GRID */
+
+        #bike-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        /* CARD */
+
+        .bike-card {
+            background: var(--card);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .bike-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .bike-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .content {
+            padding: 18px;
+        }
+
+        .tag {
+            font-size: 12px;
+            background: #334155;
+            padding: 4px 8px;
+            border-radius: 5px;
+        }
+
+        .price {
+            display: block;
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        .stock {
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .in {
+            color: #22c55e;
+        }
+
+        .out {
+            color: #ef4444;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background: var(--primary);
+            border: none;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #b91c1c;
+        }
+
+        /* MODAL */
+
+        dialog {
+            border: none;
+            border-radius: 10px;
+            padding: 25px;
+            background: var(--card);
+            color: white;
+            max-width: 450px;
+        }
+
+        dialog::backdrop {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #020617;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">Velocity<span>Bikes</span></div>
+            <ul class="nav-links">
+                <li><a href="Bike.html">Home</a></li>
+                <li><a href="inventory.html">Inventory</a></li>
+                <li><a href="Test.html">Test Ride</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <div class="page-title">
+            <h1>Premium Bike Inventory</h1>
+            <p>Find your next ride</p>
+        </div>
+
+        <section class="controls">
+
+            <input type="text" id="search" placeholder="Search bikes..." oninput="applyFilters()">
+
+            <select id="category" onchange="applyFilters()">
+                <option value="All">All Categories</option>
+                <option value="Sports">Sports</option>
+                <option value="Cruiser">Cruiser</option>
+                <option value="Scooter">Scooter</option>
+            </select>
+
+        </section>
+
+        <div id="bike-grid"></div>
+
+    </div>
+
+    <dialog id="bike-modal">
+        <div id="modal-content"></div>
+        <br>
+        <button onclick="document.getElementById('bike-modal').close()" class="btn">Close</button>
+    </dialog>
+
+    <footer>
+        <p>© 2026 Velocity Bikes</p>
+    </footer>
+
+    <script>
+
+        const bikes = [
+
+            { id: 1, name: "Kawasaki Z1000", category: "Sports", price: 1279000, engine: "1043cc", stock: 3, img: "https://static0.hotcarsimages.com/wordpress/wp-content/uploads/2020/09/Kawasaki-Z1000-Naked-Cropped-1.jpg?q=50&fit=crop&w=825&dpr=1.5" },
+
+            { id: 2, name: "Yamaha R1", category: "Sports", price: 2550000, engine: "998cc", stock: 1, img: "https://cdn.pixabay.com/photo/2020/02/21/09/00/isolated-4866914_640.png" },
+
+            { id: 3, name: "BMW S1000RR", category: "Sports", price: 2000000, engine: "999cc", stock: 2, img: "https://i.redd.it/rlcg80yi08bf1.jpeg" },
+
+            { id: 4, name: "Honda Dio 125", category: "Scooter", price: 120000, engine: "125cc", stock: 5, img: "https://bd.gaadicdn.com/upload/userfiles/images/67334bb5dfa02.jpg?tr=w-930" },
+
+            { id: 5, name: "TVS Apache RR310", category: "Sports", price: 250000, engine: "312cc", stock: 0, img: "https://www.motorcyclespecs.co.za/Gallery_M-Z_16/TVS-Apache-RR310-18-01.jpg" },
+
+            { id: 6, name: "Royal Enfield Meteor", category: "Cruiser", price: 190000, engine: "349cc", stock: 4, img: "https://imgd.aeplcdn.com/642x361/n/cw/ec/134415/royalenfield-super-meteor-650-right-side-view7.jpeg?isig=0&wm=3&q=75" },
+
+            { id: 7, name: "KTM RC 390", category: "Sports", price: 320000, engine: "373cc", stock: 3, img: "https://media-cdn.tripadvisor.com/media/photo-o/0a/fa/f7/f9/ktm-rc-390.jpg" },
+
+            { id: 8, name: "Suzuki Hayabusa", category: "Sports", price: 1800000, engine: "1340cc", stock: 1, img: "https://imgcdnblog.carbay.com/wp-content/uploads/2021/12/07184211/1-500x333.jpg" },
+
+            { id: 9, name: "Ducati Panigale V4", category: "Sports", price: 3500000, engine: "1103cc", stock: 0, img: "https://i0.wp.com/www.asphaltandrubber.com/wp-content/uploads/2018/12/Ducati-Panigale-V4-R-20.jpg?w=402&h=268&ssl=1" },
+
+            { id: 10, name: "Harley Fat Boy", category: "Cruiser", price: 2200000, engine: "1868cc", stock: 2, img: "https://preview.redd.it/fat-boy-s-pros-cons-v0-nzjmjxy4drde1.jpeg?width=640&crop=smart&auto=webp&s=97cc649d16eb77a7c443446d6e0bbffada6ea541" }
+
+        ];
+
+        const grid = document.getElementById("bike-grid");
+        const modal = document.getElementById("bike-modal");
+        const modalContent = document.getElementById("modal-content");
+
+        const formatter = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
+
+        function render(list) {
+
+            grid.innerHTML = list.map(b => `
+<div class="bike-card">
+<img src="${b.img}" alt="${b.name}">
+<div class="content">
+<span class="tag">${b.category}</span>
+<h3>${b.name}</h3>
+<p>${b.engine} Engine</p>
+<span class="price">${formatter.format(b.price)}</span>
+<div class="stock ${b.stock > 0 ? 'in' : 'out'}">
+${b.stock > 0 ? 'In Stock' : 'Out of Stock'}
+</div>
+
+<button class="btn" onclick="openDetails(${b.id})" ${b.stock == 0 ? 'disabled' : ''}>
+${b.stock == 0 ? 'Sold Out' : 'View Details'}
+</button>
+
+</div>
+</div>
+
+`).join("");
+
+        }
+
+        function applyFilters() {
+
+            const search = document.getElementById("search").value.toLowerCase();
+            const category = document.getElementById("category").value;
+
+            let filtered = bikes.filter(b =>
+
+                b.name.toLowerCase().includes(search) &&
+                (category === "All" || b.category === category)
+
+            );
+
+            render(filtered);
+
+        }
+
+        function openDetails(id) {
+
+            const b = bikes.find(x => x.id === id);
+
+            modalContent.innerHTML = `
+
+<img src="${b.img}" style="width:100%;border-radius:8px;margin-bottom:15px;">
+
+<h2>${b.name}</h2>
+
+<p><b>Engine:</b> ${b.engine}</p>
+
+<p><b>Category:</b> ${b.category}</p>
+
+<p><b>Price:</b> ${formatter.format(b.price)}</p>
+
+<p><b>Stock:</b> ${b.stock}</p>
+
+<br>
+
+<button class="btn" onclick="window.location.href='Test.html'">Book Test Ride</button>
+
+`;
+
+            modal.showModal();
+
+        }
+
+        render(bikes);
+
+    </script>
+
+</body>
+
+</html>

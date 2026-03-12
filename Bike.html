@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Velocity Bikes - Premium Motorcycle Showroom and Service">
+    <title>Velocity Bikes | Experience the Ride</title>
+    <style>
+        
+        :root {
+            --accent-color: #e63946;
+            --dark-navy: #0b132b;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --text-light: #f1faee;
+            --card-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            --transition: all 0.3s ease;
+        }
+
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: var(--dark-navy);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+       
+        header {
+            background: var(--dark-navy);
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .logo span { color: var(--accent-color); }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover { color: var(--accent-color); }
+
+        
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), 
+                        url('Screenshot 2026-02-10 115318.png') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding-top: 80px;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-inline: auto;
+        }
+
+        .btn-cta {
+            background: var(--accent-color);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-cta:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(230, 57, 70, 0.4); }
+
+        .container { max-width: 1200px; margin: auto; padding: 4rem 2rem; }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--accent-color);
+            margin: 10px auto;
+        }
+
+        #bike-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .bike-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            border-bottom: 4px solid transparent;
+            will-change: transform;
+        }
+
+        .bike-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-color);
+        }
+
+        .bike-card:hover img {
+            transform: scale(1.05);
+            transition: transform 0.4s ease;
+}
+
+        .bike-card img { width: 100%; height: 200px; object-fit: cover; }
+
+        .bike-card-content { padding: 1.5rem; }
+
+       
+        .booking-section { background: var(--dark-navy); color: white; padding: 5rem 0; }
+        
+        #test-ride-form {
+            max-width: 500px;
+            margin: auto;
+            background: rgba(255,255,255,0.05);
+            padding: 2.5rem;
+            border-radius: 10px;
+        }
+
+        .form-group { margin-bottom: 1.5rem; }
+        
+        label { display: block; margin-bottom: 0.5rem; color: #ccc; }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            background: #1a2639;
+            border: 1px solid #333;
+            color: white;
+            border-radius: 5px;
+        }
+
+        #form-feedback { text-align: center; margin-top: 1rem; font-weight: bold; }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--dark-navy);
+                flex-direction: column;
+                padding: 1rem 0;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .hamburger {
+                display: block;
+                cursor: pointer;
+                font-size: 1.5rem;
+                color: white;
+            }
+            .hero-content h1 { font-size: 2.5rem; }
+        }
+
+        /* Photo Gallery Styles */
+        .gallery {
+            padding: 4rem 0;
+            background: #ffffff;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 1rem;
+            transform: translateY(100%);
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        /* About Section */
+        .about {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-color);
+            box-shadow: var(--card-shadow);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            margin-bottom: 1rem;
+            color: var(--dark-navy);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 4rem 0;
+            background: #f1f5f9;
+        }
+
+        .testimonial-slider {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .testimonial {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            margin: 0 2rem;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: #64748b;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: var(--dark-navy);
+        }
+
+        .slider-controls {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .slider-controls.prev { left: -60px; }
+        .slider-controls.next { right: -60px; }
+
+        /* Contact Section */
+        .contact {
+            padding: 4rem 0;
+            background: var(--dark-navy);
+            color: white;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .contact-item i {
+            margin-right: 1rem;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+        }
+
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 1rem;
+            background: #1a2639;
+            border: 1px solid #333;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .contact-form textarea {
+            height: 120px;
+            resize: vertical;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">Velocity<span>Bikes</span></div>
+            <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="inventory.html">Inventory</a></li>
+                <li><a href="Test.html">Test Ride</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Elite Performance</h1>
+            <p>Step into the world's most advanced motorcycle showroom. Engineering that ignites your soul.</p>
+            <a class="btn-cta" href="#inventory">Explore Collection</a>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Why Choose Velocity Bikes?</h2>
+                    <p>With over a decade of experience in the motorcycle industry, Velocity Bikes stands as India's premier destination for premium motorcycles. We combine cutting-edge technology with unparalleled customer service to deliver an exceptional riding experience.</p>
+                    <p>Our showroom features the latest models from world-renowned manufacturers, backed by comprehensive service and maintenance facilities.</p>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-number">5000+</div>
+                            <div class="stat-label">Happy Customers</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">15+</div>
+                            <div class="stat-label">Years Experience</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">Bike Brands</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&q=80&w=500" alt="Velocity Bikes Showroom" style="width:100%; border-radius:15px; box-shadow: var(--card-shadow);">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🏍️</div>
+                    <h3>Test Rides</h3>
+                    <p>Experience the thrill of your dream bike with our guided test ride sessions. Feel the power, handling, and comfort before making your decision.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔧</div>
+                    <h3>Expert Maintenance</h3>
+                    <p>Our certified technicians provide comprehensive maintenance services using genuine parts and advanced diagnostic equipment.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💰</div>
+                    <h3>Financing Options</h3>
+                    <p>Flexible financing solutions with competitive interest rates. Get your dream bike with easy EMI options and quick approval.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🛡️</div>
+                    <h3>Insurance Services</h3>
+                    <p>Comprehensive bike insurance coverage with multiple providers. Protect your investment with the best policies available.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🚚</div>
+                    <h3>Home Delivery</h3>
+                    <p>Convenient home delivery service for your new bike. Professional assembly and safety checks included.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📞</div>
+                    <h3>24/7 Support</h3>
+                    <p>Round-the-clock customer support for all your queries and emergencies. We're always here when you need us.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <div class="testimonial-slider">
+                <button class="slider-controls prev" onclick="prevTestimonial()">&#10094;</button>
+                <div class="testimonial" id="current-testimonial">
+                    <p class="testimonial-text">"Velocity Bikes provided exceptional service from start to finish. The staff was knowledgeable and helped me find the perfect bike for my needs. Highly recommended!"</p>
+                    <p class="testimonial-author">- Rajesh Kumar, Delhi</p>
+                </div>
+                <button class="slider-controls next" onclick="nextTestimonial()">&#10095;</button>
+            </div>
+        </div>
+    </section>
+
+    <main id="inventory" class="container">
+        <h2 class="section-title">Current Inventory</h2>
+        <div id="bike-grid">
+            <div class="bike-card">
+                <img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&q=80&w=400" alt="Kawasaki Z1100">
+                <div class="bike-card-content">
+                    <h3>Kawasaki Z1100</h3>
+                    <p style="color:#666">Engine: 1100cc</p>
+                    <p style="font-weight:bold; color:var(--accent-color); font-size:1.2rem">₹12.79 Lakh</p>
+                </div>
+            </div>
+            <div class="bike-card">
+                <img src="https://cdn.pixabay.com/photo/2020/02/21/09/00/isolated-4866914_640.png" alt="Yamaha R1M">
+                <div class="bike-card-content">
+                    <h3>Yamaha R1M</h3>
+                    <p style="color:#666">Engine: 998cc</p>
+                    <p style="font-weight:bold; color:var(--accent-color); font-size:1.2rem">₹25.50 Lakh</p>
+                </div>
+            </div>
+            <div class="bike-card">
+                <img src="https://i.redd.it/rlcg80yi08bf1.jpeg" alt="BMW S1000RR">
+                <div class="bike-card-content">
+                    <h3>BMW S1000RR</h3>
+                    <p style="color:#666">Engine: 999cc</p>
+                    <p style="font-weight:bold; color:var(--accent-color); font-size:1.2rem">₹20.00 Lakh</p>
+                </div>
+            </div>
+            <div class="bike-card">
+                <img src="https://bd.gaadicdn.com/upload/userfiles/images/67334bb5dfa02.jpg?tr=w-930" alt="Honda Dio 125 X-Edition">
+                <div class="bike-card-content">
+                    <h3>Honda Dio 125 X-Edition</h3>
+                    <p style="color:#666">Engine: 125cc</p>
+                    <p style="font-weight:bold; color:var(--accent-color); font-size:1.2rem">₹1.20 Lakh</p>
+                </div>
+            </div>
+            <div class="bike-card">
+                <img src="https://www.motorcyclespecs.co.za/Gallery_M-Z_16/TVS-Apache-RR310-18-01.jpg" alt="TVS Apache RR 310">
+                <div class="bike-card-content">
+                    <h3>TVS Apache RR 310</h3>
+                    <p style="color:#666">Engine: 312cc</p>
+                    <p style="font-weight:bold; color:var(--accent-color); font-size:1.2rem">₹2.50 Lakh</p>
+                </div>
+            </div>
+            <div class="bike-card">
+                <img src="https://imgd.aeplcdn.com/642x361/n/cw/ec/134415/royalenfield-super-meteor-650-right-side-view7.jpeg?isig=0&wm=3&q=75" alt="Royal Enfield Meteor 350">
+                <div class="bike-card-content">
+                    <h3>Royal Enfield Meteor 350</h3>
+                    <p style="color:#666">Engine: 349cc</p>
+                    <p style="font-weight:bold; color:var(--accent-color); font-size:1.2rem">₹1.90 Lakh</p>
+                </div>
+            </div>
+        </div>
+        <h2>Check Out Inventory For More...</h2>
+    </main>
+
+    <section class="gallery">
+        <div class="container">
+            <h2 class="section-title">Our Showroom Gallery</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&q=80&w=400" alt="Motorcycle Showroom Interior">
+                    <div class="gallery-overlay">
+                        <h4>Premium Showroom</h4>
+                        <p>State-of-the-art facility</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&q=80&w=400" alt="Bike Maintenance">
+                    <div class="gallery-overlay">
+                        <h4>Expert Service</h4>
+                        <p>Professional maintenance</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://i.redd.it/rlcg80yi08bf1.jpeg" alt="Sports Bike">
+                    <div class="gallery-overlay">
+                        <h4>Sports Collection</h4>
+                        <p>High-performance machines</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&q=80&w=400" alt="Cruiser Bike">
+                    <div class="gallery-overlay">
+                        <h4>Cruiser Lineup</h4>
+                        <p>Classic and modern cruisers</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://www.datocms-assets.com/119921/1714528734-test-riding-tips-with-honda-1.jpg?auto=format&w=740" alt="Test Ride">
+                    <div class="gallery-overlay">
+                        <h4>Test Ride Experience</h4>
+                        <p>Feel the power firsthand</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://cdn.wallpapersafari.com/45/30/4RpIhf.jpg" alt="Royal Enfield">
+                    <div class="gallery-overlay">
+                        <h4>Iconic Brands</h4>
+                        <p>Trusted manufacturers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title" style="color:white">Get In Touch</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Visit Our Showroom</h3>
+                    <div class="contact-item">
+                        <i>📍</i>
+                        <span>123 Bike Street, Auto City, Delhi 110001</span>
+                    </div>
+                    <div class="contact-item">
+                        <i>📞</i>
+                        <span>+91 98765 43210</span>
+                    </div>
+                    <div class="contact-item">
+                        <i>✉️</i>
+                        <span>info@velocitybikes.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i>🕒</i>
+                        <span>Mon-Sat: 9AM-8PM | Sun: 10AM-6PM</span>
+                    </div>
+                    <h3 style="margin-top: 2rem;">Follow Us</h3>
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <a href="#" style="color: white; font-size: 1.5rem;">📘</a>
+                        <a href="#" style="color: white; font-size: 1.5rem;">📷</a>
+                        <a href="#" style="color: white; font-size: 1.5rem;">🐦</a>
+                        <a href="#" style="color: white; font-size: 1.5rem;">💼</a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <input type="tel" placeholder="Your Phone">
+                    <textarea placeholder="Your Message" required></textarea>
+                    <button type="submit" class="btn-cta">Send Message</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="text-align:center; padding: 2rem; background:#050a18; color:#555">
+        <p>&copy; 2026 Velocity Bikes Global. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('nav-links');
+            navLinks.classList.toggle('active');
+        }
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('nav-links').classList.remove('active');
+            });
+        });
+
+        // Form handling
+        document.getElementById('test-ride-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('username').value;
+            const bike = document.getElementById('bike-selection').value;
+            const date = document.getElementById('ride-date').value;
+            const time = document.getElementById('ride-time').value;
+
+            if (name && bike && date && time) {
+                const feedback = document.getElementById('form-feedback');
+                feedback.style.color = '#10b981';
+                feedback.textContent = `Thank you, ${name}! Your test ride for ${bike} is booked on ${date} at ${time}. We'll contact you soon.`;
+                
+                // Reset form
+                this.reset();
+                
+                // Clear message after 5 seconds
+                setTimeout(() => {
+                    feedback.textContent = '';
+                }, 5000);
+            }
+        });
+
+        // Testimonial slider
+        const testimonials = [
+            {
+                text: "\"Velocity Bikes provided exceptional service from start to finish. The staff was knowledgeable and helped me find the perfect bike for my needs. Highly recommended!\"",
+                author: "- Rajesh Kumar, Delhi"
+            },
+            {
+                text: "\"Amazing experience! The test ride was thrilling and the financing options made it easy to own my dream bike. Five stars!\"",
+                author: "- Priya Sharma, Mumbai"
+            },
+            {
+                text: "\"Professional service and great selection. The maintenance team is top-notch. Will definitely return for future needs.\"",
+                author: "- Amit Singh, Bangalore"
+            }
+        ];
+
+        let currentTestimonialIndex = 0;
+
+        function updateTestimonial() {
+            const testimonial = testimonials[currentTestimonialIndex];
+            document.getElementById('current-testimonial').innerHTML = `
+                <p class="testimonial-text">${testimonial.text}</p>
+                <p class="testimonial-author">${testimonial.author}</p>
+            `;
+        }
+
+        function nextTestimonial() {
+            currentTestimonialIndex = (currentTestimonialIndex + 1) % testimonials.length;
+            updateTestimonial();
+        }
+
+        function prevTestimonial() {
+            currentTestimonialIndex = (currentTestimonialIndex - 1 + testimonials.length) % testimonials.length;
+            updateTestimonial();
+        }
+
+        // Initialize testimonial
+        updateTestimonial();
+
+        // Contact form handling
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const inputs = this.querySelectorAll('input, textarea');
+            let isValid = true;
+            inputs.forEach(input => {
+                if (input.hasAttribute('required') && !input.value.trim()) {
+                    isValid = false;
+                    input.style.borderColor = '#ef4444';
+                } else {
+                    input.style.borderColor = '#333';
+                }
+            });
+
+            if (isValid) {
+                alert('Thank you for your message! We\'ll get back to you soon.');
+                this.reset();
+            }
+        });
+    </script>
+    
+</body>
+</html>
