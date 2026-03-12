@@ -735,44 +735,48 @@
             }
         });
 
-        // Testimonial slider
-        const testimonials = [
-            {
-                text: "\"Velocity Bikes provided exceptional service from start to finish. The staff was knowledgeable and helped me find the perfect bike for my needs. Highly recommended!\"",
-                author: "- Rajesh Kumar, Delhi"
-            },
-            {
-                text: "\"Amazing experience! The test ride was thrilling and the financing options made it easy to own my dream bike. Five stars!\"",
-                author: "- Priya Sharma, Mumbai"
-            },
-            {
-                text: "\"Professional service and great selection. The maintenance team is top-notch. Will definitely return for future needs.\"",
-                author: "- Amit Singh, Bangalore"
-            }
-        ];
+        document.addEventListener("DOMContentLoaded", function () {
 
-        let currentTestimonialIndex = 0;
-
-        function updateTestimonial() {
-            const testimonial = testimonials[currentTestimonialIndex];
-            document.getElementById('current-testimonial').innerHTML = `
-                <p class="testimonial-text">${testimonial.text}</p>
-                <p class="testimonial-author">${testimonial.author}</p>
-            `;
+    const testimonials = [
+        {
+            text: "Velocity Bikes provided exceptional service from start to finish. The staff was knowledgeable and helped me find the perfect bike for my needs. Highly recommended!",
+            author: "- Rajesh Kumar, Delhi"
+        },
+        {
+            text: "Amazing experience! The test ride was thrilling and the financing options made it easy to own my dream bike. Five stars!",
+            author: "- Priya Sharma, Mumbai"
+        },
+        {
+            text: "Professional service and great selection. The maintenance team is top-notch. Will definitely return for future needs.",
+            author: "- Amit Singh, Bangalore"
         }
+    ];
 
-        function nextTestimonial() {
-            currentTestimonialIndex = (currentTestimonialIndex + 1) % testimonials.length;
-            updateTestimonial();
-        }
+    let currentTestimonialIndex = 0;
 
-        function prevTestimonial() {
-            currentTestimonialIndex = (currentTestimonialIndex - 1 + testimonials.length) % testimonials.length;
-            updateTestimonial();
-        }
+    function updateTestimonial() {
+        const testimonial = testimonials[currentTestimonialIndex];
+        const container = document.getElementById("current-testimonial");
 
-        // Initialize testimonial
+        container.innerHTML = `
+            <p class="testimonial-text">${testimonial.text}</p>
+            <p class="testimonial-author">${testimonial.author}</p>
+        `;
+    }
+
+    window.nextTestimonial = function () {
+        currentTestimonialIndex = (currentTestimonialIndex + 1) % testimonials.length;
         updateTestimonial();
+    };
+
+    window.prevTestimonial = function () {
+        currentTestimonialIndex = (currentTestimonialIndex - 1 + testimonials.length) % testimonials.length;
+        updateTestimonial();
+    };
+
+    updateTestimonial();
+
+});
 
         // Contact form handling
         document.querySelector('.contact-form').addEventListener('submit', function(e) {
@@ -796,4 +800,5 @@
     </script>
     
 </body>
+
 </html>
