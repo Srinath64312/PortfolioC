@@ -70,7 +70,6 @@
 
         .nav-links a:hover { color: var(--accent-color); }
 
-        /* FIX: hamburger was missing display:none on desktop */
         .hamburger {
             display: none;
             cursor: pointer;
@@ -103,7 +102,6 @@
             margin-inline: auto;
         }
 
-        /* FIX: .btn-cta used as <a> tag — needs display:inline-block to render correctly */
         .btn-cta {
             display: inline-block;
             background: var(--accent-color);
@@ -225,45 +223,25 @@
         .service-icon { font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem; }
         .service-card h3 { margin-bottom: 1rem; color: var(--dark-navy); }
 
-        /* ── TESTIMONIALS ──
-           BUGS FIXED FROM ORIGINAL:
-           1. id="current-testimonial" existed TWICE in the DOM — once as an orphan
-              outside the slider, once inside it. getElementById only returns the FIRST
-              match, so the visible card inside the slider was never updated.
-           2. Two extra <button> tags (prev/next) were placed OUTSIDE .testimonial-slider,
-              creating unstyled duplicate buttons visible above the section.
-           3. innerHTML replacement on every click caused a visible content flash.
-           4. window.prevTestimonial / nextTestimonial were defined inside DOMContentLoaded,
-              so the inline onclick="" on the orphan buttons could fire before they existed.
-           FIX: CSS transform-based sliding track. Single container holds all controls.
-        */
+        /* ── TESTIMONIALS — simple show/hide ── */
         .testimonials { padding: 5rem 0; background: #f1f5f9; }
 
-        .testimonial-slider {
-            position: relative;
-            max-width: 760px;
+        .testimonial-wrapper {
+            max-width: 700px;
             margin: 0 auto;
-            padding: 0 60px;
-        }
-
-        .testimonial-track-wrapper {
-            overflow: hidden;
-            border-radius: 15px;
-        }
-
-        .testimonial-track {
-            display: flex;
-            transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
         }
 
         .testimonial-card {
+            display: none;
             background: white;
             padding: 2.5rem 2rem;
             border-radius: 15px;
-            text-align: center;
             box-shadow: var(--card-shadow);
-            min-width: 100%;
-            box-sizing: border-box;
+        }
+
+        .testimonial-card.active {
+            display: block;
         }
 
         .testimonial-stars  { color: #f59e0b; font-size: 1.3rem; margin-bottom: 1rem; letter-spacing: 3px; }
@@ -271,10 +249,15 @@
         .testimonial-author { font-weight: 700; color: var(--dark-navy); }
         .testimonial-role   { font-size: 0.85rem; color: #94a3b8; margin-top: 0.25rem; }
 
+        .testimonial-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
         .slider-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
             background: var(--accent-color);
             color: white;
             border: none;
@@ -283,19 +266,13 @@
             border-radius: 50%;
             cursor: pointer;
             font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             transition: var(--transition);
             box-shadow: 0 4px 12px rgba(230,57,70,0.35);
-            z-index: 10;
         }
 
-        .slider-btn:hover { background: #c1121f; transform: translateY(-50%) scale(1.1); }
-        .slider-btn.prev  { left: 0; }
-        .slider-btn.next  { right: 0; }
+        .slider-btn:hover { background: #c1121f; transform: scale(1.1); }
 
-        .testimonial-dots { display: flex; justify-content: center; gap: 8px; margin-top: 1.5rem; }
+        .testimonial-dots { display: flex; gap: 8px; }
 
         .dot {
             width: 10px;
@@ -400,7 +377,6 @@
             .hero-content h1  { font-size: 2.5rem; }
             .about-content,
             .contact-content  { grid-template-columns: 1fr; }
-            .testimonial-slider { padding: 0 50px; }
         }
     </style>
 </head>
@@ -496,44 +472,44 @@
         </div>
     </section>
 
-    <!-- TESTIMONIALS — fully rebuilt, all bugs fixed (see CSS comments above) -->
+    <!-- TESTIMONIALS — simple show/hide slider -->
     <section class="testimonials" id="testimonials">
         <div class="container">
             <h2 class="section-title">What Our Customers Say</h2>
-            <div class="testimonial-slider">
-                <button class="slider-btn prev" id="prevBtn" aria-label="Previous testimonial">&#10094;</button>
+            <div class="testimonial-wrapper">
 
-                <div class="testimonial-track-wrapper">
-                    <div class="testimonial-track" id="testimonialTrack">
-
-                        <div class="testimonial-card">
-                            <div class="testimonial-stars">★★★★★</div>
-                            <p class="testimonial-text">"Velocity Bikes provided exceptional service from start to finish. The staff was knowledgeable and helped me find the perfect bike for my needs. Highly recommended!"</p>
-                            <p class="testimonial-author">Rajesh Kumar</p>
-                            <p class="testimonial-role">Delhi</p>
-                        </div>
-
-                        <div class="testimonial-card">
-                            <div class="testimonial-stars">★★★★★</div>
-                            <p class="testimonial-text">"Amazing experience! The test ride was thrilling and the financing options made it easy to own my dream bike. Five stars!"</p>
-                            <p class="testimonial-author">Priya Sharma</p>
-                            <p class="testimonial-role">Mumbai</p>
-                        </div>
-
-                        <div class="testimonial-card">
-                            <div class="testimonial-stars">★★★★☆</div>
-                            <p class="testimonial-text">"Professional service and great selection. The maintenance team is top-notch. Will definitely return for future needs."</p>
-                            <p class="testimonial-author">Amit Singh</p>
-                            <p class="testimonial-role">Bangalore</p>
-                        </div>
-
-                    </div>
+                <div class="testimonial-card active" id="t-0">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"Velocity Bikes provided exceptional service from start to finish. The staff was knowledgeable and helped me find the perfect bike for my needs. Highly recommended!"</p>
+                    <p class="testimonial-author">Rajesh Kumar</p>
+                    <p class="testimonial-role">Delhi</p>
                 </div>
 
-                <button class="slider-btn next" id="nextBtn" aria-label="Next testimonial">&#10095;</button>
-            </div>
+                <div class="testimonial-card" id="t-1">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"Amazing experience! The test ride was thrilling and the financing options made it easy to own my dream bike. Five stars!"</p>
+                    <p class="testimonial-author">Priya Sharma</p>
+                    <p class="testimonial-role">Mumbai</p>
+                </div>
 
-            <div class="testimonial-dots" id="testimonialDots"></div>
+                <div class="testimonial-card" id="t-2">
+                    <div class="testimonial-stars">★★★★☆</div>
+                    <p class="testimonial-text">"Professional service and great selection. The maintenance team is top-notch. Will definitely return for future needs."</p>
+                    <p class="testimonial-author">Amit Singh</p>
+                    <p class="testimonial-role">Bangalore</p>
+                </div>
+
+                <div class="testimonial-controls">
+                    <button class="slider-btn" onclick="changeSlide(-1)">&#10094;</button>
+                    <div class="testimonial-dots" id="testimonialDots">
+                        <button class="dot active" onclick="goToSlide(0)"></button>
+                        <button class="dot" onclick="goToSlide(1)"></button>
+                        <button class="dot" onclick="goToSlide(2)"></button>
+                    </div>
+                    <button class="slider-btn" onclick="changeSlide(1)">&#10095;</button>
+                </div>
+
+            </div>
         </div>
     </section>
 
@@ -642,7 +618,6 @@
                         <a href="#" style="color: white; font-size: 1.5rem;">💼</a>
                     </div>
                 </div>
-                <!-- FIX: original had no <form> tag — submit event never fired -->
                 <form class="contact-form" id="contactForm" novalidate>
                     <input type="text"  placeholder="Your Name"    required>
                     <input type="email" placeholder="Your Email"   required>
@@ -671,45 +646,35 @@
             });
         });
 
-        /* ── TESTIMONIAL SLIDER ── */
-        (function () {
-            const track  = document.getElementById('testimonialTrack');
-            const cards  = Array.from(track.querySelectorAll('.testimonial-card'));
-            const dotsEl = document.getElementById('testimonialDots');
-            const total  = cards.length;
-            let current  = 0;
+        /* ── TESTIMONIAL SLIDER — simple show/hide ── */
+        var currentSlide = 0;
+        var totalSlides = 3;
 
-            /* build dot indicators */
-            cards.forEach((_, i) => {
-                const dot = document.createElement('button');
-                dot.className = 'dot' + (i === 0 ? ' active' : '');
-                dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
-                dot.addEventListener('click', () => goTo(i));
-                dotsEl.appendChild(dot);
-            });
+        function goToSlide(index) {
+            // hide current
+            document.getElementById('t-' + currentSlide).classList.remove('active');
+            document.querySelectorAll('.dot')[currentSlide].classList.remove('active');
 
-            function goTo(index) {
-                current = (index + total) % total;
-                track.style.transform = `translateX(-${current * 100}%)`;
-                dotsEl.querySelectorAll('.dot').forEach((d, i) =>
-                    d.classList.toggle('active', i === current)
-                );
-            }
+            // show new
+            currentSlide = (index + totalSlides) % totalSlides;
+            document.getElementById('t-' + currentSlide).classList.add('active');
+            document.querySelectorAll('.dot')[currentSlide].classList.add('active');
+        }
 
-            document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
-            document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
+        function changeSlide(direction) {
+            goToSlide(currentSlide + direction);
+        }
 
-            /* auto-advance every 5 seconds */
-            setInterval(() => goTo(current + 1), 5000);
-        })();
+        // auto-advance every 5 seconds
+        setInterval(function() { changeSlide(1); }, 5000);
 
         /* ── CONTACT FORM ── */
         document.getElementById('contactForm').addEventListener('submit', function (e) {
             e.preventDefault();
-            const inputs = this.querySelectorAll('input[required], textarea[required]');
-            let valid = true;
+            var inputs = this.querySelectorAll('input[required], textarea[required]');
+            var valid = true;
 
-            inputs.forEach(input => {
+            inputs.forEach(function(input) {
                 if (!input.value.trim()) {
                     valid = false;
                     input.style.borderColor = '#ef4444';
@@ -718,12 +683,12 @@
                 }
             });
 
-            const feedback = document.getElementById('contact-feedback');
+            var feedback = document.getElementById('contact-feedback');
             if (valid) {
                 feedback.style.color = '#10b981';
                 feedback.textContent = "Thank you! We'll get back to you soon.";
                 this.reset();
-                setTimeout(() => feedback.textContent = '', 5000);
+                setTimeout(function() { feedback.textContent = ''; }, 5000);
             } else {
                 feedback.style.color = '#ef4444';
                 feedback.textContent = 'Please fill in all required fields.';
