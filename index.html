@@ -98,7 +98,7 @@
     });
 
 
-    // 3. BACK TO TOP BUTTON — appears when you scroll down
+    // 2. BACK TO TOP BUTTON — appears when you scroll down
     var backBtn = document.createElement('button');
     backBtn.textContent = '↑ Top';
     backBtn.style.cssText =
@@ -115,7 +115,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // 4. SKILL CLICK — click a skill badge to highlight/unhighlight it
+    // 3. SKILL CLICK — click a skill badge to highlight/unhighlight it
     document.querySelectorAll('.skill').forEach(function(skill) {
       skill.style.cursor = 'pointer';
       skill.addEventListener('click', function() {
